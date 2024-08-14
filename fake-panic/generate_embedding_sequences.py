@@ -140,7 +140,10 @@ def main():
         )
 
         print(f"Sequence number {2*i+1}")
+        # BLIP prefixes the string with "Caption: " - remove this
         caption = caption_image(image_url)
+        if caption.startswith("Caption: "):
+            caption = caption[8:]
         print(f"Image caption: {caption}")
 
         caption_embedding = calculate_embedding("text", caption)
