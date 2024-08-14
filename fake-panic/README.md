@@ -44,3 +44,15 @@ for a given run by looking at the `input` key for the `seq_no` 0 output.
   "type": "image"
 
 ```
+
+## Install/use
+
+I use [rye](https://rye.astral.sh) for managing my python environments these days, and this project was set up with rye.
+
+_However_, all the code I wrote is just in the `generate_embeddings.py` file in this folder. So just run that with `rye run generate_embeddings.py` and it'll prompt you for the initial text prompt and you're away.
+
+## TODO
+
+- [ ] move the script stuff into the actual `fake_panic:main` function so that it can be run as a script
+- [ ] provide cli arg for number of runs and initial prompt
+- [ ] (maybe) find a better way of serialising the embeddings in the json file (base64-encoded binary?)
