@@ -115,7 +115,7 @@ def calculate_embedding(type, text_or_url):
 
 
 def main():
-    num_iterations = 2  # should be even
+    num_iterations = 100  # should be even
     prompt = input("Enter initial prompt: ")
 
     # Get the current timestamp in ISO8601 format
