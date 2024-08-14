@@ -114,51 +114,7 @@ def calculate_embedding(type, text_or_url):
     return embedding
 
 
-def main():
-    num_iterations = 100  # should be even
-    prompt = input("Enter initial prompt: ")
-
-    # Get the current timestamp in ISO8601 format
-    timestamp = datetime.datetime.now().replace(microsecond=0).isoformat()
-    output_data = []
-
-    # all the index maths assumes just 2 models in sequence
-    # not necessary to make it more general at this stage
-    for i in range(int(num_iterations / 2)):
-        print(f"Sequence number {2*i}")
-        image_url = generate_image(prompt)
-        print(f"Generated image: {image_url}")
-
-        image_embedding = calculate_embedding("vision", image_url)
-        output_data.append(
-            {
-                "seq_no": 2 * i,
-                "type": "image",
-                "input": prompt,
-                "embedding": image_embedding,
-            }
-        )
-
-        print(f"Sequence number {2*i+1}")
-        # BLIP prefixes the string with "Caption: " - remove this
-        caption = caption_image(image_url)
-        if caption.startswith("Caption: "):
-            caption = caption[9:]
-        print(f"Image caption: {caption}")
-
-        caption_embedding = calculate_embedding("text", caption)
-        output_data.append(
-            {
-                "seq_no": 2 * i + 1,
-                "type": "text",
-                "input": image_url,
-                "embedding": caption_embedding,
-            }
-        )
-
-        prompt = caption
-        print("\n")
-
+def save_output_data(timestamp, output_data):
     # Read existing data from the file
     try:
         with open("data/output.json", "r") as f:
@@ -172,6 +128,58 @@ def main():
     # Write updated data back to the file
     with open("data/output.json", "w") as f:
         json.dump(existing_data, f, indent=4, sort_keys=True)
+
+
+def main():
+    num_iterations = 100  # should be even
+    prompt = input("Enter initial prompt: ")
+
+    # Get the current timestamp in ISO8601 format
+    timestamp = datetime.datetime.now().replace(microsecond=0).isoformat()
+    output_data = []
+
+    try:
+        # all the index maths assumes just 2 models in sequence
+        # not necessary to make it more general at this stage
+        for i in range(int(num_iterations / 2)):
+            print(f"Sequence number {2*i}")
+            image_url = generate_image(prompt)
+            print(f"Generated image: {image_url}")
+
+            image_embedding = calculate_embedding("vision", image_url)
+            output_data.append(
+                {
+                    "seq_no": 2 * i,
+                    "type": "image",
+                    "input": prompt,
+                    "embedding": image_embedding,
+                }
+            )
+
+            print(f"Sequence number {2*i+1}")
+            # BLIP prefixes the string with "Caption: " - remove this
+            caption = caption_image(image_url)
+            if caption.startswith("Caption: "):
+                caption = caption[9:]
+            print(f"Image caption: {caption}")
+
+            caption_embedding = calculate_embedding("text", caption)
+            output_data.append(
+                {
+                    "seq_no": 2 * i + 1,
+                    "type": "text",
+                    "input": image_url,
+                    "embedding": caption_embedding,
+                }
+            )
+
+            prompt = caption
+            print("\n")
+    except KeyboardInterrupt:
+        print("\nKeyboard interrupt detected. Saving current progress...")
+    finally:
+        save_output_data(timestamp, output_data)
+        print("Data saved successfully.")
 
 
 if __name__ == "__main__":
