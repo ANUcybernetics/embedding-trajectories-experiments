@@ -1,10 +1,18 @@
-import requests
+import datetime
 import json
-import time
 import os
+import sys
+import time
 
-# Set your Replicate API token
-# os.environ["REPLICATE_API_TOKEN"] = "your_api_token_here"
+import requests
+
+# get Replicate API token
+try:
+    REPLICATE_API_TOKEN = os.environ["REPLICATE_API_TOKEN"]
+except KeyError:
+    print("Error: REPLICATE_API_TOKEN not found in environment variables.")
+    print("Please set the REPLICATE_API_TOKEN environment variable and try again.")
+    sys.exit(1)
 
 # latest versions as at 2024-08-13
 # flux schnell
@@ -28,7 +36,7 @@ EMBEDDING_MODEL_VERSION = (
 def latest_model_version(model_name):
     url = f"https://api.replicate.com/v1/models/{model_name}"
     headers = {
-        "Authorization": f"Token {os.environ['REPLICATE_API_TOKEN']}",
+        "Authorization": f"Token {REPLICATE_API_TOKEN}",
         "Content-Type": "application/json",
     }
     response = requests.get(url, headers=headers)
@@ -42,7 +50,7 @@ def latest_model_version(model_name):
 def generate_image(prompt):
     url = "https://api.replicate.com/v1/predictions"
     headers = {
-        "Authorization": f"Token {os.environ['REPLICATE_API_TOKEN']}",
+        "Authorization": f"Token {REPLICATE_API_TOKEN}",
         "Content-Type": "application/json",
     }
     data = {
@@ -63,7 +71,7 @@ def generate_image(prompt):
 def caption_image(image_url):
     url = "https://api.replicate.com/v1/predictions"
     headers = {
-        "Authorization": f"Token {os.environ['REPLICATE_API_TOKEN']}",
+        "Authorization": f"Token {REPLICATE_API_TOKEN}",
         "Content-Type": "application/json",
     }
     data = {
@@ -84,7 +92,7 @@ def caption_image(image_url):
 def calculate_embedding(type, text_or_url):
     url = "https://api.replicate.com/v1/predictions"
     headers = {
-        "Authorization": f"Token {os.environ['REPLICATE_API_TOKEN']}",
+        "Authorization": f"Token {REPLICATE_API_TOKEN}",
         "Content-Type": "application/json",
     }
     data = {
@@ -107,29 +115,60 @@ def calculate_embedding(type, text_or_url):
 
 
 def main():
+    num_iterations = 2  # should be even
     prompt = input("Enter initial prompt: ")
 
+    # Get the current timestamp in ISO8601 format
+    timestamp = datetime.datetime.now().replace(microsecond=0).isoformat()
     output_data = []
 
-    for i in range(10):
-        print(f"Iteration {i+1}")
+    # all the index maths assumes just 2 models in sequence
+    # not necessary to make it more general at this stage
+    for i in range(int(num_iterations / 2)):
+        print(f"Sequence number {2*i}")
         image_url = generate_image(prompt)
         print(f"Generated image: {image_url}")
 
         image_embedding = calculate_embedding("vision", image_url)
-        output_data.append([i, "image"] + image_embedding)
+        output_data.append(
+            {
+                "seq_no": 2 * i,
+                "type": "image",
+                "input": prompt,
+                "embedding": image_embedding,
+            }
+        )
 
+        print(f"Sequence number {2*i+1}")
         caption = caption_image(image_url)
         print(f"Image caption: {caption}")
 
         caption_embedding = calculate_embedding("text", caption)
-        output_data.append([i, "text"] + caption_embedding)
+        output_data.append(
+            {
+                "seq_no": 2 * i + 1,
+                "type": "text",
+                "input": image_url,
+                "embedding": caption_embedding,
+            }
+        )
 
         prompt = caption
         print("\n")
 
+    # Read existing data from the file
+    try:
+        with open("data/output.json", "r") as f:
+            existing_data = json.load(f)
+    except FileNotFoundError:
+        existing_data = {}
+
+    # Add new data to existing data
+    existing_data[timestamp] = output_data
+
+    # Write updated data back to the file
     with open("data/output.json", "w") as f:
-        json.dump(output_data, f, indent=4, sort_keys=True)
+        json.dump(existing_data, f, indent=4, sort_keys=True)
 
 
 if __name__ == "__main__":
