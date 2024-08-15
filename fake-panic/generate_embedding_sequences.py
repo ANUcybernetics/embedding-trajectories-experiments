@@ -131,7 +131,7 @@ def save_output_data(timestamp, output_data):
 
 
 def main():
-    num_iterations = 100  # should be even
+    num_iterations = int(input("Enter the number of iterations (min. 2): "))
     prompt = input("Enter initial prompt: ")
 
     # Get the current timestamp in ISO8601 format
