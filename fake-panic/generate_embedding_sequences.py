@@ -115,19 +115,10 @@ def calculate_embedding(type, text_or_url):
 
 
 def save_output_data(timestamp, output_data):
-    # Read existing data from the file
-    try:
-        with open("data/output.json", "r") as f:
-            existing_data = json.load(f)
-    except FileNotFoundError:
-        existing_data = {}
-
-    # Add new data to existing data
-    existing_data[timestamp] = output_data
-
-    # Write updated data back to the file
-    with open("data/output.json", "w") as f:
-        json.dump(existing_data, f, indent=4, sort_keys=True)
+    # Write data to a new file with timestamp as filename
+    filename = f"data/{timestamp}.json"
+    with open(filename, "w") as f:
+        json.dump(output_data, f, indent=4, sort_keys=True)
 
 
 def main():
