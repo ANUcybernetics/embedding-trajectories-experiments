@@ -115,6 +115,7 @@ def calculate_embedding(type, text_or_url):
 
 
 def save_output_data(timestamp, output_data):
+    timestamp = timestamp.replace(":", "-")    # To avoid "Invalid argument" error by ":"
     # Write data to a new file with timestamp as filename
     filename = f"data/{timestamp}.json"
     with open(filename, "w") as f:
