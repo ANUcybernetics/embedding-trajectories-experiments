@@ -28,5 +28,9 @@ def embed(model, chunks):
 
 def main() -> int:
     model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+    chunks = aesop_fables()
+
+    # embed the first two fables (for example)
+    print(embed(model, chunks[0:2]))
 
     return 0
