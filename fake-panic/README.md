@@ -7,8 +7,16 @@ back-and-forth between an image generation model (currently flux schnell) and a
 captioning model (currently BLIP). It also calculates the embedding (using
 ImageBind) for each output in the sequence.
 
-The `generate_image_embeddings.py` script is the workhorse, and it calls out to
+The `fake_panic` module (which can be executed as a script---see
+`project.scripts` in `pyproject.toml`) is the workhorse, and it calls out to
 Replicate-hosted models to do the actual work.
+
+To create a run (using `rye`):
+
+    REPLICATE_API_TOKEN=yourtokenhere123456 rye run fake-panic
+
+You will be prompted for the number of iterations and the initial prompt. After
+that, you're off to the races!
 
 Once completed, the sequence of outputs (including embeddings) is stored in
 `data/output.json` as an array inside a top-level dict, keyed by the ISO8601
