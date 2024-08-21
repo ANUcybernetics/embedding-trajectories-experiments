@@ -1,6 +1,8 @@
 # This is Fake Panic
 
-It works like panic: outputs are fed back in as inputs recursively, bouncing
+It's "fake" in the sense that it doesn't actually run the Panic web app or
+display stuff on the screens/vestaboards. But it does perform the core genAI
+operations: outputs are fed back in as inputs recursively, bouncing
 back-and-forth between an image generation model (currently flux schnell) and a
 captioning model (currently BLIP). It also calculates the embedding (using
 ImageBind) for each output in the sequence.
