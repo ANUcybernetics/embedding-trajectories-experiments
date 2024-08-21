@@ -13,9 +13,9 @@ this research vision, but suffice to say that he's pretty excited about it.
   of Panic (Panic itself is in a separate repo, ask [Ben](ben.swift@anu.edu.au)
   if you need access).
 
-  - `lit-trajectories/` contains python scripts for chunking + embedding classic
-    texts from **The Canon**^TM and looking at their trajectories in embedding
-    space.
+- `lit-trajectories/` contains python scripts for chunking + embedding classic
+  texts from **The Canon**^TM and looking at their trajectories in embedding
+  space.
 
 There will be more subfolders as we come up with more experiments---although we
 can also share code between experiments too. For now, just get stuff done and we
