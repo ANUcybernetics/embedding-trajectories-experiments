@@ -52,7 +52,7 @@ for a given run by looking at the `input` key for the `seq_no` 0 output.
   "input": "a group of sheep grazing on lush grass",
   "seq_no": 0,
   "type": "image"
-
+}
 ```
 
 ## Install/use
