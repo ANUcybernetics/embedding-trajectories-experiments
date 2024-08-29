@@ -1,5 +1,4 @@
 import lit_trajectories.texts as texts
-import lit_trajectories.embedder as embedder
 import lit_trajectories.vis as vis
 
 

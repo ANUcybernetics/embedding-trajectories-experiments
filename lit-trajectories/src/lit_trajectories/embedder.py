@@ -12,4 +12,6 @@ def embed(chunks):
 
 def trimap_embeddings(chunks):
     embeddings = [embed(text) for (_, _, text) in chunks]
-    return trimap.TRIMAP().fit_transform(np.array(embeddings))
+    return trimap.TRIMAP(distance="cosine", apply_pca=False).fit_transform(
+        np.array(embeddings)
+    )
