@@ -3,7 +3,12 @@ name = "lit-trajectories"
 version = "0.1.0"
 description = "Add your description here"
 authors = [{ name = "Ben Swift", email = "ben@benswift.me" }]
-dependencies = ["sentence-transformers>=3.0.1", "spacy>=3.7.6"]
+dependencies = [
+    "sentence-transformers>=3.0.1",
+    "spacy>=3.7.6",
+    "altair>=5.4.1",
+    "pandas>=2.2.2",
+]
 readme = "README.md"
 requires-python = ">= 3.8"
 

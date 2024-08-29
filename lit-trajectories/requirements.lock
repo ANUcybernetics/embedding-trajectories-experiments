@@ -10,8 +10,13 @@
 #   universal: false
 
 -e file:.
+altair==5.4.1
+    # via lit-trajectories
 annotated-types==0.7.0
     # via pydantic
+attrs==24.2.0
+    # via jsonschema
+    # via referencing
 blis==0.7.11
     # via thinc
 catalogue==2.0.10
@@ -47,10 +52,15 @@ huggingface-hub==0.24.6
 idna==3.7
     # via requests
 jinja2==3.1.4
+    # via altair
     # via spacy
     # via torch
 joblib==1.4.2
     # via scikit-learn
+jsonschema==4.23.0
+    # via altair
+jsonschema-specifications==2023.12.1
+    # via jsonschema
 langcodes==3.4.0
     # via spacy
 language-data==1.2.0
@@ -69,10 +79,13 @@ murmurhash==1.0.10
     # via preshed
     # via spacy
     # via thinc
+narwhals==1.5.5
+    # via altair
 networkx==3.3
     # via torch
 numpy==1.26.4
     # via blis
+    # via pandas
     # via scikit-learn
     # via scipy
     # via sentence-transformers
@@ -80,11 +93,14 @@ numpy==1.26.4
     # via thinc
     # via transformers
 packaging==24.1
+    # via altair
     # via huggingface-hub
     # via spacy
     # via thinc
     # via transformers
     # via weasel
+pandas==2.2.2
+    # via lit-trajectories
 pillow==10.4.0
     # via sentence-transformers
 preshed==3.0.9
@@ -99,9 +115,16 @@ pydantic-core==2.20.1
     # via pydantic
 pygments==2.18.0
     # via rich
+python-dateutil==2.9.0.post0
+    # via pandas
+pytz==2024.1
+    # via pandas
 pyyaml==6.0.2
     # via huggingface-hub
     # via transformers
+referencing==0.35.1
+    # via jsonschema
+    # via jsonschema-specifications
 regex==2024.7.24
     # via transformers
 requests==2.32.3
@@ -111,6 +134,9 @@ requests==2.32.3
     # via weasel
 rich==13.8.0
     # via typer
+rpds-py==0.20.0
+    # via jsonschema
+    # via referencing
 safetensors==0.4.4
     # via transformers
 scikit-learn==1.5.1
@@ -127,6 +153,8 @@ setuptools==73.0.1
     # via torch
 shellingham==1.5.4
     # via typer
+six==1.16.0
+    # via python-dateutil
 smart-open==7.0.4
     # via weasel
 spacy==3.7.6
@@ -161,11 +189,14 @@ typer==0.12.5
     # via spacy
     # via weasel
 typing-extensions==4.12.2
+    # via altair
     # via huggingface-hub
     # via pydantic
     # via pydantic-core
     # via torch
     # via typer
+tzdata==2024.1
+    # via pandas
 urllib3==2.2.2
     # via requests
 wasabi==1.1.3
