@@ -4,10 +4,10 @@ import lit_trajectories.vis as vis
 
 
 def main() -> int:
-    chunks = texts.aesop_paragraphs()
-    embeddings = embedder.embed_as_ndarray(chunks)
+    chunks = texts.aesop_sentences()
+    print(chunks[0:3])
+    # embeddings = embedder.embed_as_ndarray(chunks)
 
-    # print(embeddings[0])
-    vis.calculate_trimap(embeddings)
+    # vis.calculate_trimap(embeddings)
 
     return 0
