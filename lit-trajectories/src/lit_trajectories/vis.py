@@ -1,26 +1,35 @@
 import altair as alt
 import pandas as pd
-import numpy as np
-import trimap
+import lit_trajectories.embedder as embedder
 
 
-def calculate_trimap(data):
-    low_dim_embedding = trimap.TRIMAP().fit_transform(data)
-    print(low_dim_embedding[:10])
+def trimap_scatterplot(chunks):
+    """
+    Takes a list of embeddings, calculates the trimap for them, then writes out an interactive (html) chart.
 
+    Args:
+        embeddings (list): A list of high-dimensional embeddings.
 
-def scatterplot():
-    rand = np.random.RandomState(42)
+    Returns:
+        None. Saves the interactive chart as an HTML file.
+    """
+    # Calculate trimap
+    low_dim_embedding = embedder.trimap_embeddings(chunks)
 
-    df = pd.DataFrame({"xval": range(100), "yval": rand.randn(100).cumsum()})
+    # Create DataFrame from input embeddings
+    df = pd.DataFrame(chunks, columns=["title", "index", "text"])
 
+    # Add trimap results to the DataFrame
+    df["x"] = low_dim_embedding[:, 0]
+    df["y"] = low_dim_embedding[:, 1]
+
+    # Create slider for interactivity
     slider = alt.binding_range(min=0, max=100, step=1)
     cutoff = alt.param(bind=slider, value=50)
 
     alt.Chart(df).mark_point().encode(
-        x="xval",
-        y="yval",
-        color=alt.condition(
-            alt.datum.xval < cutoff, alt.value("red"), alt.value("blue")
-        ),
+        x="x",
+        y="y",
+        color="title",
+        opacity=alt.condition(alt.datum.index < cutoff, alt.value(1), alt.value(0.2)),
     ).add_params(cutoff).save("chart.html")
