@@ -10,10 +10,29 @@
 #   universal: false
 
 -e file:.
+annotated-types==0.7.0
+    # via pydantic
+blis==0.7.11
+    # via thinc
+catalogue==2.0.10
+    # via spacy
+    # via srsly
+    # via thinc
 certifi==2024.7.4
     # via requests
 charset-normalizer==3.3.2
     # via requests
+click==8.1.7
+    # via typer
+cloudpathlib==0.18.1
+    # via weasel
+confection==0.1.5
+    # via thinc
+    # via weasel
+cymem==2.0.8
+    # via preshed
+    # via spacy
+    # via thinc
 filelock==3.15.4
     # via huggingface-hub
     # via torch
@@ -28,25 +47,58 @@ huggingface-hub==0.24.6
 idna==3.7
     # via requests
 jinja2==3.1.4
+    # via spacy
     # via torch
 joblib==1.4.2
     # via scikit-learn
+langcodes==3.4.0
+    # via spacy
+language-data==1.2.0
+    # via langcodes
+marisa-trie==1.2.0
+    # via language-data
+markdown-it-py==3.0.0
+    # via rich
 markupsafe==2.1.5
     # via jinja2
+mdurl==0.1.2
+    # via markdown-it-py
 mpmath==1.3.0
     # via sympy
+murmurhash==1.0.10
+    # via preshed
+    # via spacy
+    # via thinc
 networkx==3.3
     # via torch
-numpy==2.1.0
+numpy==1.26.4
+    # via blis
     # via scikit-learn
     # via scipy
     # via sentence-transformers
+    # via spacy
+    # via thinc
     # via transformers
 packaging==24.1
     # via huggingface-hub
+    # via spacy
+    # via thinc
     # via transformers
+    # via weasel
 pillow==10.4.0
     # via sentence-transformers
+preshed==3.0.9
+    # via spacy
+    # via thinc
+pydantic==2.8.2
+    # via confection
+    # via spacy
+    # via thinc
+    # via weasel
+pydantic-core==2.20.1
+    # via pydantic
+pygments==2.18.0
+    # via rich
 pyyaml==6.0.2
     # via huggingface-hub
     # via transformers
@@ -54,7 +106,11 @@ regex==2024.7.24
     # via transformers
 requests==2.32.3
     # via huggingface-hub
+    # via spacy
     # via transformers
+    # via weasel
+rich==13.8.0
+    # via typer
 safetensors==0.4.4
     # via transformers
 scikit-learn==1.5.1
@@ -65,9 +121,29 @@ scipy==1.14.1
 sentence-transformers==3.0.1
     # via lit-trajectories
 setuptools==73.0.1
+    # via marisa-trie
+    # via spacy
+    # via thinc
     # via torch
+shellingham==1.5.4
+    # via typer
+smart-open==7.0.4
+    # via weasel
+spacy==3.7.6
+    # via lit-trajectories
+spacy-legacy==3.0.12
+    # via spacy
+spacy-loggers==1.0.5
+    # via spacy
+srsly==2.4.8
+    # via confection
+    # via spacy
+    # via thinc
+    # via weasel
 sympy==1.13.2
     # via torch
+thinc==8.2.4
+    # via spacy
 threadpoolctl==3.5.0
     # via scikit-learn
 tokenizers==0.19.1
@@ -77,11 +153,26 @@ torch==2.4.0
 tqdm==4.66.5
     # via huggingface-hub
     # via sentence-transformers
+    # via spacy
     # via transformers
 transformers==4.44.1
     # via sentence-transformers
+typer==0.12.5
+    # via spacy
+    # via weasel
 typing-extensions==4.12.2
     # via huggingface-hub
+    # via pydantic
+    # via pydantic-core
     # via torch
+    # via typer
 urllib3==2.2.2
     # via requests
+wasabi==1.1.3
+    # via spacy
+    # via thinc
+    # via weasel
+weasel==0.4.1
+    # via spacy
+wrapt==1.16.0
+    # via smart-open
