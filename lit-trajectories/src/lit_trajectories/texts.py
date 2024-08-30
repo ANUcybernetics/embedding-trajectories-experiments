@@ -9,7 +9,11 @@ def aesop_fables():
     for fable in fables:
         paragraphs = fable.split("\n\n")
         title = paragraphs[0].strip()
-        unwrapped_paragraphs = [" ".join(para.split("\n")) for para in paragraphs[1:]]
+        unwrapped_paragraphs = [
+            " ".join(para.split("\n"))
+            for para in paragraphs[1:]
+            if para.strip() != "[Illustration]"
+        ]
         unwrapped_fable = "\n\n".join(unwrapped_paragraphs)
         unwrapped_fables.append((title, unwrapped_fable.strip()))
     return [(title, 0, fable) for title, fable in unwrapped_fables if fable]
