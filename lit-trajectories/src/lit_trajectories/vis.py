@@ -132,18 +132,9 @@ def trimap_trailplot(df):
         .transform_filter(alt.datum.index == df["index"].max())
     )
 
-    background_index = (
-        alt.Chart(df)
-        .mark_text(baseline="middle", fontSize=72, opacity=0.1)
-        .encode(text="index:O")
-        .transform_filter(index_select)
-    )
-
     # Combine all layers
     chart = (
-        alt.layer(
-            visible_points, index_labels, title_labels, hover_line, background_index
-        )
+        alt.layer(visible_points, index_labels, title_labels, hover_line)
         .properties(width=700, height=500, padding=10)
         .configure_axis(labelFontSize=12, titleFontSize=14)
         .add_params(search_box)
