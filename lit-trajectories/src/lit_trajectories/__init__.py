@@ -1,10 +1,10 @@
 import lit_trajectories.texts as texts
 import lit_trajectories.vis as vis
-import subprocess
+import os
 
 
 def open_file(filename):
-    subprocess.run(["open", filename])
+    os.system(f"open {filename}")
 
 
 def main() -> int:
