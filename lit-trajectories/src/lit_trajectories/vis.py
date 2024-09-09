@@ -26,7 +26,30 @@ def trimap_df(chunks):
     return df
 
 
-def trimap_scatterplot(df):
+def pacmap_df(chunks):
+    """
+    Takes a list of embeddings, calculates the pacmap for them, and returns a DataFrame.
+
+    Args:
+        chunks (list): A list of chunks containing title, index, and text.
+
+    Returns:
+        pandas.DataFrame: A DataFrame with pacmap results added.
+    """
+    # Calculate pacmap
+    low_dim_embedding = embedder.pacmap_embeddings(chunks)
+
+    # Create DataFrame from input embeddings
+    df = pd.DataFrame(chunks, columns=["title", "index", "text"])
+
+    # Add pacmap results to the DataFrame
+    df["x"] = low_dim_embedding[:, 0]
+    df["y"] = low_dim_embedding[:, 1]
+
+    return df
+
+
+def scatterplot(df):
     # Create slider for interactivity
     slider = alt.binding_range(min=0, max=df["index"].max(), step=1, name="index")
     cutoff = alt.param(bind=slider, value=0)
@@ -50,7 +73,7 @@ def trimap_scatterplot(df):
     return chart
 
 
-def trimap_trailplot(df):
+def trailplot(df):
     # Hover selection
     hover = alt.selection_point(on="mouseover", fields=["title"], empty=False)
     hover_point_opacity = alt.selection_point(on="mouseover", fields=["title"])

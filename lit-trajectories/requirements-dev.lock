@@ -15,6 +15,7 @@ altair==5.4.1
 annotated-types==0.7.0
     # via pydantic
 annoy==1.17.3
+    # via pacmap
     # via trimap
 attrs==24.2.0
     # via jsonschema
@@ -88,10 +89,12 @@ narwhals==1.5.5
 networkx==3.3
     # via torch
 numba==0.60.0
+    # via pacmap
     # via trimap
 numpy==1.26.4
     # via blis
     # via numba
+    # via pacmap
     # via pandas
     # via scikit-learn
     # via scipy
@@ -106,6 +109,8 @@ packaging==24.1
     # via thinc
     # via transformers
     # via weasel
+pacmap==0.7.3
+    # via lit-trajectories
 pandas==2.2.2
     # via lit-trajectories
 pillow==10.4.0
@@ -147,6 +152,7 @@ rpds-py==0.20.0
 safetensors==0.4.4
     # via transformers
 scikit-learn==1.5.1
+    # via pacmap
     # via sentence-transformers
     # via trimap
 scipy==1.14.1
