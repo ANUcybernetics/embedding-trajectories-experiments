@@ -5,13 +5,13 @@ import lit_trajectories.embedder as embedder
 
 def trimap_df(chunks):
     """
-    Takes a list of embeddings, calculates the trimap for them, then writes out an interactive (html) chart.
+    Takes a list of embeddings, calculates the trimap for them, and returns a DataFrame.
 
     Args:
-        embeddings (list): A list of high-dimensional embeddings.
+        chunks (list): A list of chunks containing title, index, and text.
 
     Returns:
-        None. Saves the interactive chart as an HTML file.
+        pandas.DataFrame: A DataFrame with trimap results added.
     """
     # Calculate trimap
     low_dim_embedding = embedder.trimap_embeddings(chunks)
@@ -30,13 +30,24 @@ def trimap_scatterplot(df):
     # Create slider for interactivity
     slider = alt.binding_range(min=0, max=df["index"].max(), step=1, name="index")
     cutoff = alt.param(bind=slider, value=0)
-    alt.Chart(df).mark_point().encode(
-        x="x",
-        y="y",
-        color=alt.Color("title").legend(None),
-        opacity=alt.condition(alt.datum.index == cutoff, alt.value(1), alt.value(0.2)),
-        tooltip=["title", "index", "text"],
-    ).add_params(cutoff).interactive().save("chart.html")
+
+    chart = (
+        alt.Chart(df)
+        .mark_point()
+        .encode(
+            x="x",
+            y="y",
+            color=alt.Color("title").legend(None),
+            opacity=alt.condition(
+                alt.datum.index == cutoff, alt.value(1), alt.value(0.2)
+            ),
+            tooltip=["title", "index", "text"],
+        )
+        .add_params(cutoff)
+        .interactive()
+    )
+
+    return chart
 
 
 def trimap_trailplot(df):
@@ -130,16 +141,13 @@ def trimap_trailplot(df):
 
     # Combine all layers
     chart = (
-        (
-            alt.layer(
-                visible_points, index_labels, title_labels, hover_line, background_index
-            )
-            .properties(width=700, height=500, padding=10)
-            .configure_axis(labelFontSize=12, titleFontSize=14)
-            .add_params(search_box)
+        alt.layer(
+            visible_points, index_labels, title_labels, hover_line, background_index
         )
+        .properties(width=700, height=500, padding=10)
+        .configure_axis(labelFontSize=12, titleFontSize=14)
+        .add_params(search_box)
         .interactive()
-        .save("trailplot.html")
     )
 
     return chart
