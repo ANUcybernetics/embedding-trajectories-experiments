@@ -51,14 +51,6 @@ def trimap_scatterplot(df):
 
 
 def trimap_trailplot(df):
-    # Create slider for interactivity
-    slider = alt.binding_range(
-        min=df["index"].min(), max=df["index"].max(), step=1, name="Index "
-    )
-    index_select = alt.selection_point(
-        name="index_select", fields=["index"], bind=slider
-    )
-
     # Hover selection
     hover = alt.selection_point(on="mouseover", fields=["title"], empty=False)
     hover_point_opacity = alt.selection_point(on="mouseover", fields=["title"])
@@ -85,10 +77,13 @@ def trimap_trailplot(df):
                 & alt.expr.test(alt.expr.regexp(search_box, "i"), alt.datum.title),
                 alt.value(0.8),
                 alt.value(0.1),
-            )
+            ),
+            tooltip=[
+                alt.Tooltip("title:N", title="Title"),
+                alt.Tooltip("text:N", title="Text"),
+            ],
         )
-        .transform_filter(index_select)
-        .add_params(hover, hover_point_opacity, index_select)
+        .add_params(hover, hover_point_opacity)
     )
 
     hover_line = alt.layer(
@@ -98,7 +93,7 @@ def trimap_trailplot(df):
             size=alt.Size(
                 "index:Q",
                 scale=alt.Scale(
-                    domain=[df["index"].min(), df["index"].max()], range=[1, 8]
+                    domain=[df["index"].min(), df["index"].max()], range=[8, 1]
                 ),
                 legend=None,
             ),
