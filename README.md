@@ -4,8 +4,41 @@ This repo is a place for us to experiment (research woo!) with different ideas
 about semantic trajectories, genAI, embeddings,
 [TDA](https://en.wikipedia.org/wiki/Topological_data_analysis) and more.
 
-On Ben's TODO list is to come up with a coherent one-pager about the scope of
-this research vision, but suffice to say that he's pretty excited about it.
+## Motivation and research questions
+
+Anyone who's played with Panic (or watched others play with Panic) has probably
+had one of these questions cross their mind at some point.
+
+The purpose of this project is to give us answers to these questions which are
+both quantifiable and satisfying (i.e. we feel like they represent deeper truths
+about the process).
+
+The hope is that these methods are useful outside Panic as well, to understand
+and predict semantic trajectories/narrative structure/the shape of information
+flows in animal and machine communication).
+
+### how did it get _here_ from _that_ initial prompt?
+
+- was it predictable that it would end up here?
+- how sensitive is it to the input, i.e. would it still have ended up here with
+  a _slightly_ different prompt?
+- how sensitive is it to the random seed(s) of the models?
+
+### is it stuck?
+
+- the text/images it's generating now seem to be "semantically stable"; will it
+  ever move on to a different topic?
+- is it predictable which initial prompts lead to a "stuck" trajectory?
+
+### has it done this before?
+
+- how similar is this run's trajectory to other runs?
+- what determines whether they'll be similar? initial prompt, or something else?
+
+### which models have the biggest impact on what happens?
+
+- do certain models dominate the trajectory? or is it an emergent property of
+  the interactions between all models in the network?
 
 ## Repo structure
 
