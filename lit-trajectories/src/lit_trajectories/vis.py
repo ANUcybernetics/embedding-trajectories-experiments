@@ -62,7 +62,7 @@ def scatterplot(df):
             y="y",
             color=alt.Color("title").legend(None),
             opacity=alt.condition(
-                alt.datum.index == cutoff, alt.value(1), alt.value(0.2)
+                alt.datum.index == cutoff, alt.value(1), alt.value(0.1)
             ),
             tooltip=["title", "index", "text"],
         )
