@@ -56,6 +56,15 @@ can refactor as we go.
 
 See the READMEs in each subfolder for more info about each project.
 
+## TODO
+
+- create a unified data model for all trajectories (timeseries of semantic data
+  points), perhaps with Pydantic?
+- move the TDA code across from Sungyeon's other TDA repo
+- switch to a [vector database](https://github.com/asg017/sqlite-vec) for the
+  embeddings (in fact, for all data)
+- run this on cybersonic
+
 ## Authors
 
 Ben Swift, Sungyeon Hong, hopefully others :) Check the commit history to see
