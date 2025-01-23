@@ -15,10 +15,13 @@ from gph import ripser_parallel
 
 import time
 
+MAX_DIM = 10
+MAX_POINTS = 1000
+
 # Print CSV header
 print("ndim,npoints,time")
-for ndim in range(2, 10, 1):
-    for npoints in range(100, 1000, 100):
+for ndim in range(2, MAX_DIM, 1):
+    for npoints in range(100, MAX_POINTS, 100):
         pc = np.random.random((npoints, ndim))
 
         start_time = time.time()
