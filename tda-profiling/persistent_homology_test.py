@@ -6,6 +6,10 @@
 # ]
 # ///
 
+# to run this file, use the following command in this directory:
+#
+#     uv run persistent_homology_test.py
+#
 import numpy as np
 from gph import ripser_parallel
 
