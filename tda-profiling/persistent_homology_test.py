@@ -13,8 +13,17 @@
 import numpy as np
 from gph import ripser_parallel
 
-ndim = 10
-npoints = 100
+import time
 
-pc = np.random.random((npoints, ndim))
-dgm = ripser_parallel(pc, maxdim=2, n_threads=-1)
+# Print CSV header
+print("ndim,npoints,time")
+for ndim in range(2, 10, 1):
+    for npoints in range(100, 1000, 100):
+        pc = np.random.random((npoints, ndim))
+
+        start_time = time.time()
+        dgm = ripser_parallel(pc, maxdim=2, n_threads=-1)
+        end_time = time.time()
+
+        total_time = end_time - start_time
+        print(f"{ndim},{npoints},{total_time:.4f}")
