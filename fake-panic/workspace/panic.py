@@ -126,6 +126,8 @@ class Panic(object):
         with open(f"embeddings/{filename}.json", "w") as f:
             json.dump(output_data, f, indent=4, sort_keys=True)
 
+    def varying_initial_conditions(self, input_prompt, mode="substitute"):
+        input_prompt
 
     def run_panic(self, num_iterations, prompt):
         # num_iterations = int(input("Enter the number of iterations (min. 2): "))

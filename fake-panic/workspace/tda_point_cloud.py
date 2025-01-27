@@ -3,7 +3,7 @@ import os
 import datetime
 import gudhi
 import json
-import pandas as pd
+# import pandas as pd
 import numpy as np
 import pickle as pickle
 from pylab import *
@@ -14,7 +14,7 @@ from gudhi.point_cloud.timedelay import TimeDelayEmbedding
 
 
 """ Run PANIC """
-num_iterations = 1
+num_iterations = 2
 run_panic = Panic()
 prompt_list = open("input_prompts.txt", "r")
 for line in prompt_list.readlines():
@@ -33,15 +33,15 @@ for line in prompt_list.readlines():
         print(f"Image {2*i}: {image_url}")
 
         image_embedding = run_panic.calculate_embedding("vision", image_url)
-        point_cloud.append(image_embedding)
-        output_data.append(
-            {
-                "seq_no": 2 * i,
-                "type": "image",
-                "input": prompt,
-                # "embedding": image_embedding,
-            }
-        )
+        # point_cloud.append(image_embedding)
+        # output_data.append(
+        #     {
+        #         "seq_no": 2 * i,
+        #         "type": "image",
+        #         "input": prompt,
+        #         # "embedding": image_embedding,
+        #     }
+        # )
 
         # print(f"Sequence number {2 * i + 1}")
         # BLIP prefixes the string with "Caption: " - remove this
@@ -51,44 +51,44 @@ for line in prompt_list.readlines():
         print(f"Caption {2*i + 1}: {caption}")
 
         caption_embedding = run_panic.calculate_embedding("text", caption)
-        point_cloud.append(caption_embedding)
-        output_data.append(
-            {
-                "seq_no": 2 * i + 1,
-                "type": "text",
-                "input": image_url,
-                # "embedding": caption_embedding,
-            }
-        )
+        # point_cloud.append(caption_embedding)
+        # output_data.append(
+        #     {
+        #         "seq_no": 2 * i + 1,
+        #         "type": "text",
+        #         "input": image_url,
+        #         # "embedding": caption_embedding,
+        #     }
+        # )
 
         prompt = caption
         # print("\n")
-    with open(f"embeddings/{file_name}.json", "w") as f:
-        json.dump(output_data, f, indent=4, sort_keys=True)
+    # with open(f"embeddings/{file_name}.json", "w") as f:
+    #     json.dump(output_data, f, indent=4, sort_keys=True)
 
-    rips = gudhi.RipsComplex(points=point_cloud)  # , max_edge_length=10)
-
-    simplex_tree = rips.create_simplex_tree(max_dimension=3)
-    # print("Num simplices:", simplex_tree.num_simplices())
-
-    # simplex_tree.compute_persistence()
-    # print("Betti nums", simplex_tree.persistent_betti_numbers())
-
-    diagram = simplex_tree.persistence(homology_coeff_field=2, min_persistence=0)
-    # print("diag=", diagram)
-
-    ax = gudhi.plot_persistence_diagram(diagram)
-    ax.set_title(input_prompt)
-    ax.set_aspect("equal")
-    # plt.show()
-    plt.savefig(f"ph_results/PD_{file_name}.png")
-    plt.close()
-
-    ax = gudhi.plot_persistence_barcode(diagram)
-    ax.set_title(input_prompt)
-    # plt.show()
-    plt.savefig(f"ph_results/BC_{file_name}.png")
-    plt.close()
+    # rips = gudhi.RipsComplex(points=point_cloud)  # , max_edge_length=10)
+    #
+    # simplex_tree = rips.create_simplex_tree(max_dimension=3)
+    # # print("Num simplices:", simplex_tree.num_simplices())
+    #
+    # # simplex_tree.compute_persistence()
+    # # print("Betti nums", simplex_tree.persistent_betti_numbers())
+    #
+    # diagram = simplex_tree.persistence(homology_coeff_field=2, min_persistence=0)
+    # # print("diag=", diagram)
+    #
+    # ax = gudhi.plot_persistence_diagram(diagram)
+    # ax.set_title(input_prompt)
+    # ax.set_aspect("equal")
+    # # plt.show()
+    # plt.savefig(f"ph_results/PD_{file_name}.png")
+    # plt.close()
+    #
+    # ax = gudhi.plot_persistence_barcode(diagram)
+    # ax.set_title(input_prompt)
+    # # plt.show()
+    # plt.savefig(f"ph_results/BC_{file_name}.png")
+    # plt.close()
 
 
     # """ Data processing """
