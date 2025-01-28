@@ -25,7 +25,7 @@ from gudhi import RipsComplex, plot_persistence_diagram, plot_persistence_barcod
 from gph import ripser_parallel
 
 run_panic = Panic()
-TDA_LIB = "giotto"  # "gudhi", "giotto"
+TDA_LIB = "gudhi"  # "gudhi", "giotto"
 MAX_DIM = 2
 num_iterations = 20
 
