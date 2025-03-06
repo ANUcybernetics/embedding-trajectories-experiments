@@ -12,3 +12,11 @@ dependencies = [
     "sqlite-vec>=0.1.6",
     "transformers>=4.49.0",
 ]
+
+[tool.pytest]
+pythonpath = ["."]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]
