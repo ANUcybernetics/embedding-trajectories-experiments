@@ -127,3 +127,42 @@ def invoke(invocation: Invocation) -> Invocation:
     invocation.output = output_path_or_str
 
     return invocation
+
+def generate_caption_with_moondream(image_path: Union[str, Path]) -> str:
+    """
+    Generate a caption for an image using the Moondream 2 model.
+
+    Args:
+        image_path: Path to the image file
+
+    Returns:
+        Generated caption as a string
+    """
+    # Import here to avoid circular imports
+    from PIL import Image
+    from transformers import AutoModelForCausalLM
+
+    # Load image
+    if isinstance(image_path, str):
+        image_path = Path(image_path)
+
+    image = Image.open(image_path)
+
+    # Use cache if available
+    cache_key = "moondream2_captioning"
+    if cache_key not in _MODEL_CACHE:
+        model = AutoModelForCausalLM.from_pretrained(
+            "vikhyatk/moondream2",
+            revision="2025-01-09",
+            trust_remote_code=True,
+            device_map="auto",
+            torch_dtype=torch.float16
+        )
+        _MODEL_CACHE[cache_key] = model
+
+    model = _MODEL_CACHE[cache_key]
+
+    # Generate caption
+    caption = model.caption(image, length="normal")["caption"]
+
+    return caption

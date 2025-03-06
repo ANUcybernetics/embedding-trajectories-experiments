@@ -1,7 +1,5 @@
 from dataclasses import field
 from datetime import datetime
-from enum import Enum
-from pathlib import Path
 from typing import List, Union
 from uuid import UUID, uuid4
 
@@ -12,29 +10,21 @@ class Network:
     models: List[str] = field(default_factory=list)
 
 
-class InvocationType(str, Enum):
-    TEXT = "text"
-    IMAGE = "image"
-
-
 class Invocation(BaseModel):
     id: UUID = Field(default_factory=uuid4)
-    type: InvocationType
     timestamp: datetime = Field(default_factory=datetime.now)
     model: str
-    input: Union[str, Path]
-    output: Union[str, Path]
+    input: Union[str, bytes]
+    output: Union[str, bytes]
     seed: int
     run_id: int
     network: Network = Field(default_factory=Network)
     sequence_number: int = 0
 
-    @field_validator('input', 'output')
-    @classmethod
-    def convert_paths(cls, v):
-        if isinstance(v, str) and v.startswith('/'):
-            return Path(v)
-        return v
+    # Helper method to detect content type
+    def type(self, content: Union[str, bytes]) -> str:
+        """Returns 'text' if content is a string, 'image' if content is bytes."""
+        return "text" if isinstance(content, str) else "image"
 
 
 class Run(BaseModel):
@@ -47,13 +37,6 @@ class Run(BaseModel):
         for i, invocation in enumerate(invocations):
             if invocation.sequence_number != i:
                 raise ValueError(f"Invocation at position {i} has sequence_number {invocation.sequence_number}")
-
-        # Validate output of each matches input of next
-        for i in range(len(invocations) - 1):
-            if invocations[i].output != invocations[i + 1].input:
-                raise ValueError(
-                    f"Output of invocation {i} doesn't match input of invocation {i + 1}"
-                )
 
         return invocations
 
